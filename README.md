@@ -4,7 +4,7 @@
 
 # Diagrama Block
 
-![DiagramaBlock](https://github.com/user-attachments/assets/993d7f30-8a11-4b4d-8d3a-84d0efe8b996)
+<img width="1620" alt="Diagrama Block" src="https://github.com/user-attachments/assets/93b6e7c0-3702-438f-9656-41ff91c11d2c" />
 
 # Descrierea modulelor hardware
 
