@@ -6,50 +6,75 @@
 
 <img width="1724" alt="Diagrama Block" src="https://github.com/user-attachments/assets/60ed80fb-ecaf-488f-957a-cd178b3270a1" />
 
+---
+
 # Descrierea modulelor hardware
 
-## Microcontroller – ESP32-C6
+## Microcontroler – ESP32-C6-WROOM-1-N8
 
-Sistemul este construit in jurul microcontrolerului ESP32-C6, care prezinta urmatoarele caracteristici:
+ESP32-C6 este unitatea centrală de procesare responsabilă pentru gestionarea tuturor operațiunilor sistemului, comunicarea cu senzorii și modulele, precum și managementul energiei.
 
-- Arhitectura RISC-V pe 32 de biti
-- Conectivitate wireless WiFi 6 si Bluetooth 5.0
-- Multiple interfete de comunicatie: `SPI`, `I2C`, `UART`, `PWM`, `GPIO`
-- Consum redus de energie, cu suport pentru moduri de deep sleep
+- **Arhitectură:** RISC-V pe 32 de biți  
+- **Frecvență ceas:** 160 MHz  
+- **Conectivitate wireless:** Wi-Fi 6 la 2.4 GHz, Bluetooth 5.0  
 
-## Componente de Afisare
-### E-Paper Display
+## Management Energetic & Baterie
 
-- Conectat prin header dedicat de 20 de pini
-- Semnale principale: `CS`,`DC`, `RST`, `BUSY`
-- Circuit dedicat de drive cu componente precum L1 (bobina 68uH)
-- Vizibilitate foarte buna in lumina naturala
+- **Tip baterie:** Li-Po (Litiu-Polimer)  
+- **Capacitate:** 3.7V, 1800mAh  
+- **Circuit de încărcare:** MCP73831T  
+- **Tensiune de intrare:** 5V prin USB-C  
+- **Protecții:** Protecție la supraîncărcare și descărcare profundă  
+- **Regulator de tensiune:** Regulator LDO care asigură o alimentare stabilă de 3.3V pentru toate componentele
+  
+## Afișaj – Ecran E-Paper (E-Ink)
 
-## Subsistem Baterie
+- **Dimensiune:** 7.5 inci  
+- **Rezoluție:** 800x480 pixeli  
+- **Interfață de comunicare:** SPI  
 
-### Controller de Incarcare MCP73831:
+## Modul Card SD
 
-- Gestioneaza incarcarea bateriei LiPo
-- Curent de incarcare aproximativ 500mA
-- LED de status pentru indicarea incarcarii
+- **Tip:** MicroSD (Suportă FAT32)  
+- **Interfață:** SPI  
 
-### Monitor de Baterie MAX17048:
+## Memorie NOR Flash Externă
 
-- Masoara cu precizie nivelul bateriei
-- Comunicare I2C cu microcontroller
-- Consum redus: 50μA activ, 1μA standby
+- **Capacitate:** 64MB  
+- **Interfață:** SPI  
 
-## Conectori de Extensie
+## Senzor de Mediu – BME688
 
-- Qwiic/Stemma QT pentru conectarea rapida a senzorilor si perifericelor compatibile I2C
+- **Funcții:** Măsoară temperatura, umiditatea, presiunea aerului și nivelurile de gaz  
+- **Interfață de comunicare:** I2C  
 
+## Ceas în Timp Real (RTC) – DS3231SN
 
-## Protectie ESD
+- **Funcționalitate:** Păstrează ora și data chiar și atunci când sistemul este oprit  
+- **Interfață de comunicare:** I2C  
 
-- PFMF (Polymeric Fuse) pentru protectia la supracurent
+## Conector USB-C & Protecție ESD
+
+- **Funcționalitate:** Asigură alimentarea și transferul de date  
+- **Protecție:** Protecție ESD integrată și diodă Schottky pentru protecție la polaritate inversă  
+
+## Butoane & Interacțiune cu Utilizatorul
+
+- **Butoane tactile (push):** Utilizate pentru control manual  
+
+## Interfețe de Comunicație
+
+- **GPIO:** Folosit pentru controlul butoanelor și operațiuni generale I/O  
+- **SPI:** Utilizat pentru cardul SD, memoria flash externă și ecranul e-paper  
+- **I2C:** Utilizat pentru senzorul de mediu BME688 și modulul RTC DS3231SN  
+- **UART:** Utilizat pentru depanare și comunicație serială  
+- **Wi-Fi & Bluetooth:** Asigurate de ESP32-C6 pentru conectivitate wireless  
+
+---
 
 ## Lista Componentelor folosite
-| Componenta | Link | Fisa Tehnica |
+
+| Componentă | Link | Fișă Tehnică |
 |-----------|--------------|-----------|
 | MAX17048G+T10 | [Model](https://www.snapeda.com/parts/MAX17048G+T10/Analog+Devices/view-part/?ref=eda) | [Datasheet](https://www.alldatasheet.com/view.jsp?Searchword=Max17048&gad_source=1&gbraid=0AAAAADcdDU8aYfZtfJfdZ9I5j6RwZ_cbA&gclid=Cj0KCQjwqcO_BhDaARIsACz62vNa9xrVfzjCjADRwXD0RBbo4Nret3ywwteDGLJKZui8ZL8KdVlTE7caAvQxEALw_wcB) |
 | MCP73831T-5ACI/OT | [Model](https://www.mouser.co.uk/ProductDetail/Microchip-Technology/MCP73831T-5ACI-OT?qs=hH%252BOa0VZEiAcgAcEkuamXg%3D%3D) | [Datasheet](//efaidnbmnnnibpcajpcglclefindmkaj/https://ww1.microchip.com/downloads/en/DeviceDoc/MCP73831-Family-Data-Sheet-DS20001984H.pdf) |
@@ -76,27 +101,54 @@ Sistemul este construit in jurul microcontrolerului ESP32-C6, care prezinta urma
 | ESP32-C6-WROOM-1-N8 | [Model](https://www.snapeda.com/parts/ESP32-C6-WROOM-1-N8/Espressif+Systems/view-part/?ref=eda) | [Datasheet](//efaidnbmnnnibpcajpcglclefindmkaj/https://www.mouser.com/catalog/specsheets/Espressif_ESP32_C6_WROOM_1%20_Datasheet_V0.1_PRELIMINARY_en.pdf?srsltid=AfmBOooHQKNitqODRaaPjoZInfWKTacDER1t5uRK6sKqT13TrzvVo_B7) |
 | DS3231SN# | [Model](https://www.snapeda.com/parts/DS3231SN%23/Analog+Devices/view-part/?ref=eda) | [Datasheet](https://www.alldatasheet.com/view.jsp?Searchword=Ds3231sn%20datasheet&gad_source=1&gbraid=0AAAAADcdDU-Gy9URfMxGmqiPg7ci5L3wR&gclid=Cj0KCQjwqcO_BhDaARIsACz62vMkK3ETSnW2w7mo0Fa-wgWJGn89AxWCyIND6k5X8MmoPl6hv6VWwT8aAiS-EALw_wcB) |
 
+---
+
 ## Mapare Pini – ESP32-C6
 
-| Functionalitate        | Pini GPIO            |
-|------------------------|-----------------------|
-| E-Paper Display        | IO10–IO19            |
-| Buton Reset / Boot     | IO0           
-| SD Card (SPI)          | IO4, IO5, IO6, IO9   |
-| I2C (RTC, Senzor, Fuel)| IO1 (SDA), IO2 (SCL) |
-| SPI Flash extern       | IO20–IO23            |
+| Denumire       | Pin GPIO      | Utilizare                                |
+|----------------|---------------|------------------------------------------|
+| Buton Reset    | EN            | Resetare ESP32-C6                        |
+| INT_RTC        | IO0           | Semnal de întrerupere de la RTC (DS3231)|
+| 32KHZ          | IO1           | Semnal de ceas 32 kHz                    |
+| MISO (SPI)     | IO2           | Recepție date SPI                        |
+| EPD BUSY       | IO3           | Indicator stare E-Paper                  |
+| SS_SD          | IO4           | Chip Select pentru card SD (SPI)        |
+| EPD DC         | IO5           | Data/Command pentru E-Paper             |
+| SCK (SPI)      | IO6           | Clock pentru SPI                         |
+| MOSI (SPI)     | IO7           | Transmitere date SPI                     |
+| Buton Boot     | IO9           | Intrare în bootloader                    |
+| 3V3            | 3V3           | Alimentare 3.3V                          |
+| EPD_CS         | IO10          | Selectare SPI pentru E-Paper            |
+| FLASH_CS       | IO11          | Selectare SPI pentru NOR Flash          |
+| USB_D-         | IO12          | Linie diferențială USB (minus)          |
+| USB_D+         | IO13          | Linie diferențială USB (plus)           |
+| Buton Change   | IO15          | Schimbare mod operare                    |
+| TX (UART)      | TXD0/GPIO16   | Transmitere date UART                   |
+| RX (UART)      | RXD0/GPIO17   | Recepție date UART                      |
+| RTC_RST        | IO18          | Reset extern/semnal RTC                 |
+| I2C_PW         | IO19          | Linie de alimentare / enable pentru I2C |
+| EPD_3V3_C      | IO20          | Linie de alimentare 3.3V pentru E-Paper |
+| SDA (I2C)      | IO21          | Linie de date I2C                       |
+| SCL (I2C)      | IO22          | Linie de ceas I2C                       |
+| EPD RST        | IO23          | Resetare E-Paper                        |
 
-## Extra
+---
 
-- Dimensiunile unor componente au fost ajustate pentru a rezolva incompatibilitatile detectate de verificatorul de design.
+## Informații adiționale
 
-- Rutarea a fost efectuata in dublu strat evitand pe cat de mult posibil vias-urile de putere, avand doar 9 vias-uri pe 3v3 si sub 100 de vias-uri overall in rutare.
+**Erori SMD-Hole Board Outline Clearance la Mufa USB:**  
+  - Am identificat două erori de tip **SMD-Hole Board Outline Clearance** asociate mufei USB. Conform informațiilor tehnice primite, aceste erori au fost **acceptate**.
 
-- Am efectuat via stiching in zonele in care existau zone comune pe top si pe bottom.
+**Redimensionarea și amplasarea componentelor:**
+  - Dimensiunile unor componente au fost **ajustate** pentru a rezolva incompatibilitățile detectate de verificatorul de design.
+  - Condensatori de decuplare de 100nF au fost **amplasați aproape de pinii de alimentare** ai circuitelor integrate (IC), în conformitate cu practicile standard de proiectare pentru reducerea zgomotului electric.
+  - Componentele au fost amplasate respectând pe cât de mult posibil **specifcațiile proiectului** asigurând compatibilitatea dintre carcasa oferită și dimensiunile PCB-ului.
+  - **TP-urile** au fost amplasate diferit față de specificațiile oferite, pentru a facilita o rutare eficientă. Poziția lor fiind determinată de apropierea de piesele conectate.
 
-- Am implementat planuri de masa complete atat pe top, cat si pe bottom pentru a optimiza performanta electrice si pentru a reduce interferente.
+ **Rutare și planuri de masă**
+ - **Traseele de alimentare** au fost rutate **doar pe stratul superior**, ceea ce a necesitat utilizarea a aproximativ 100 de vias-uri pentru a permite rutarea semnalelor pe stratul inferior.
+ - **Planul de masă** (GND) a fost adăugat după finalizarea rutării, aplicat atât pe stratul superior, cât și pe cel inferior, pentru a asigura o împământare cu impedanță redusă și pentru a diminua interferențele electromagnetice (EMI).
+ - Am realizat **via stitching** în regiunile unde planurile de masă de pe stratul superior și inferior se suprapuneau, pentru a asigura o conexiune electrică solidă între acestea.
 
-- Componentele au fost amplasate respectand pe cat de mult posibil specifcatiile proiectului asigurand compatibilitatea dintre carcasa oferita si dimensiunile PCB-ului.
 
-- TP-urile au fost amplasate diferit fata de specificatiile oferite, pentru a facilita o rutare eficienta. Pozitia lor fiind determinata de apropierea de piesele conectate.
 
